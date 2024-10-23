@@ -1,38 +1,90 @@
+"use client"
+
 import {
     Add,
-    ArrowDropDown,
     ArrowLeft,
     ArrowRight,
     CalendarToday,
     FilterList,
-    Search,
 } from "@mui/icons-material";
+
 import {
     Box,
     Button,
     IconButton,
-    InputAdornment,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TextField,
-    Typography,
 } from "@mui/material";
-import React from "react";
+
+import React, { useState } from "react";
+
 import SearchInput from "../components/SearchInput";
+import StyledTable from "../components/StyledTable";
+import PageHeader from "../components/PageHeader";
+import Pagination from "../components/Pagination";
+import DrawerComponent from "../components/DrawerComponent";
 
 export const ShippingCenter = (): JSX.Element => {
+    const [currentPage, setCurrentPage] = useState(0);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedData, setSelectedData] = useState<Record<string, any> | null>(null);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+
+
+    const itemsPerPage = 5;
+    const totalItems = 14; // This could be dynamic based on filtered data
+
+    const columns = [
+        { header: "SI.NO", accessor: "id" },
+        { header: "Order ID", accessor: "orderId" },
+        { header: "Order Place", accessor: "orderPlace" },
+        { header: "Pin-code", accessor: "pinCode" },
+        { header: "County", accessor: "county" },
+        { header: "State", accessor: "state" },
+        { header: "City", accessor: "city" },
+        { header: "Status", accessor: "status" },
+    ];
+
+    const data = Array.from({ length: totalItems }, (_, index) => ({
+        id: String(index + 1).padStart(2, "0"),
+        orderId: "Order ID " + (index + 1), // Sample Order ID
+        orderPlace: "Regular text column",
+        pinCode: "673006",
+        county: "Display Country",
+        state: "Display State",
+        city: "Display City",
+        status: index % 2 === 0 ? "Active" : "Inactive", // Alternates between Active and Inactive
+    }));
+
+    // Filter data based on search query
+    const filteredData = data.filter(item =>
+        item.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.orderPlace.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.city.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Calculate the number of items and data for pagination
+    const paginatedData = filteredData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+    const handleOpenDrawer = (data: Record<string, any>) => {
+        setSelectedData(data);
+        setDrawerOpen(true);
+    };
+
+    const handleCloseDrawer = () => {
+        setDrawerOpen(false);
+        setSelectedData(null); // Clear the selected data
+    };
+
     return (
         <Box
             sx={{
-                width: "1440px",
-                height: "900px",
                 bgcolor: "white",
-                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                p: 2,
+                minHeight: "100vh",
+                width: "100%"
             }}
         >
             <Box
@@ -40,34 +92,21 @@ export const ShippingCenter = (): JSX.Element => {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    width: "1395px",
-                    position: "absolute",
-                    top: 101,
-                    left: 6,
+                    width: "100%",
+                    marginBottom: "24px",
+                    marginTop: "28px"
                 }}
             >
-                <Typography
-                    variant="h6"
-                    sx={{
-                        fontFamily: "Poppins, Helvetica",
-                        fontWeight: 500,
-                        color: "#0f1728",
-                        fontSize: "22px",
-                        lineHeight: "28px",
-                        whiteSpace: "nowrap",
-                    }}
-                >
-                    Shipping centres
-                </Typography>
-
-                <SearchInput
-                    placeholder="Search centres"
-                    textColor=""
-                    width={378}
-                    height={40}
-                />
-
+                <PageHeader text="Shipping centres" />
                 <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <SearchInput
+                        placeholder="Search centres"
+                        textColor=""
+                        width={378}
+                        height={40}
+                        value={searchQuery} // Control the SearchInput
+                        onChange={(e) => setSearchQuery(e.target.value)} // Update the state on change
+                    />
                     <Button
                         variant="outlined"
                         startIcon={<CalendarToday />}
@@ -111,159 +150,25 @@ export const ShippingCenter = (): JSX.Element => {
             {/* Container for Table and Pagination */}
             <Box
                 sx={{
-                    position: "absolute",
-                    top: 165,
-                    left: 6,
-                    width: "1393px",
                     display: "flex",
-                    flexDirection: "column", // Ensures vertical stacking of table and pagination
-                    gap: 2, // Adds space between table and pagination
+                    flexDirection: "column",
+                    width: "100%", // Stretch full width
                 }}
             >
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell padding="checkbox">
-                                    <Box
-                                        sx={{
-                                            width: 24,
-                                            height: 24,
-                                            bgcolor: "#f1f4f7",
-                                            border: "1px solid #cfd3da",
-                                        }}
-                                    />
-                                </TableCell>
-                                {[
-                                    "SI.NO",
-                                    "Name of Center",
-                                    "Address",
-                                    "Pin-code",
-                                    "County",
-                                    "State",
-                                    "City",
-                                    "Status",
-                                ].map((header) => (
-                                    <TableCell
-                                        key={header}
-                                        sx={{ bgcolor: "#f1f4f7", border: "1px solid #cfd3da" }}
-                                    >
-                                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                            <Typography
-                                                variant="body2"
-                                                sx={{ fontFamily: "Poppins-Medium", color: "#1c1c1c" }}
-                                            >
-                                                {header}
-                                            </Typography>
-                                            <ArrowDropDown />
-                                        </Box>
-                                    </TableCell>
-                                ))}
-                                <TableCell
-                                    sx={{ bgcolor: "#f1f4f7", border: "1px solid #cfd3da" }}
-                                />
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Array.from({ length: 14 }).map((_, index) => (
-                                <TableRow key={index}>
-                                    <TableCell padding="checkbox">
-                                        <Box
-                                            sx={{ width: 24, height: 24, border: "1px solid #eaecf0" }}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography
-                                            variant="body2"
-                                            sx={{ fontFamily: "Poppins-Regular", color: "#4e5a6a" }}
-                                        >
-                                            {String(index + 1).padStart(2, "0")}
-                                        </Typography>
-                                    </TableCell>
-                                    {[
-                                        "Regular text column",
-                                        "Regular text column",
-                                        "673006",
-                                        "Display Country",
-                                        "Display State",
-                                        "Display City",
-                                    ].map((text, idx) => (
-                                        <TableCell key={idx}>
-                                            <Typography
-                                                variant="body2"
-                                                sx={{ fontFamily: "Poppins-Regular", color: "#4e5a6a" }}
-                                            >
-                                                {text}
-                                            </Typography>
-                                        </TableCell>
-                                    ))}
-                                    <TableCell>
-                                        <Box
-                                            sx={{
-                                                display: "inline-flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                px: 1.5,
-                                                py: 0.5,
-                                                borderRadius: 2,
-                                                border: "1px solid",
-                                                borderColor: index % 2 === 0 ? "#ffc7c7" : "#b4e2c6",
-                                                bgcolor: index % 2 === 0 ? "#fdd4d4" : "#ebfff4",
-                                            }}
-                                        >
-                                            <Typography
-                                                variant="caption"
-                                                sx={{
-                                                    fontFamily: "Poppins-Regular",
-                                                    color: index % 2 === 0 ? "#f42829" : "#319a31",
-                                                }}
-                                            >
-                                                {index % 2 === 0 ? "Inactive" : "Active"}
-                                            </Typography>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Box
-                                            sx={{ width: 24, height: 24, border: "1px solid #eaecf0" }}
-                                        />
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <StyledTable columns={columns} data={paginatedData} onRowClick={handleOpenDrawer} />
 
-                {/* Pagination Box */}
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                    }}
-                >
-                    <IconButton>
-                        <ArrowLeft />
-                    </IconButton>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                        <Button
-                            key={index}
-                            variant="outlined"
-                            sx={{
-                                minWidth: 28,
-                                height: 28,
-                                borderRadius: 1,
-                                bgcolor: index === 0 ? "#f1f4f7" : "transparent",
-                                color: index === 0 ? "#1c1c1c" : "#808285",
-                                borderColor: index === 0 ? "#d0d3db" : "transparent",
-                            }}
-                        >
-                            {index + 1}
-                        </Button>
-                    ))}
-                    <IconButton>
-                        <ArrowRight />
-                    </IconButton>
-                </Box>
+                {/* Pagination Component */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalItems={filteredData.length} // Update totalItems based on filtered data
+                    itemsPerPage={itemsPerPage}
+                    onPageChange={(page: number) => setCurrentPage(page)}
+                />
+                <DrawerComponent
+                    open={drawerOpen}
+                    onClose={handleCloseDrawer}
+                    data={selectedData}
+                />
             </Box>
         </Box>
     );
