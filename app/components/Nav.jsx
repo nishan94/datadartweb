@@ -7,8 +7,12 @@ import SearchIcon from "@mui/icons-material/Search"
 import SettingsIcon from "@mui/icons-material/Settings"
 import { Box, IconButton, InputBase, Paper, Typography } from "@mui/material"
 import React from "react"
+import { usePathname } from 'next/navigation';
+import Link from "next/link"
 
 export const Nav = () => {
+  const pathname = usePathname();
+
   return (
     <Box
       display="flex"
@@ -19,7 +23,6 @@ export const Nav = () => {
       position="sticky"
       top={0}
       bgcolor="white"
-      // Ensures it stays above other components
       zIndex={1000}
     >
       <Box display="flex" width="201px" alignItems="center">
@@ -58,11 +61,11 @@ export const Nav = () => {
       >
         <Box display="flex" alignItems="center" bgcolor="white">
           {[
-            "Orders",
-            "Subscription",
-            "Shipping Center",
-            "Cloud End Point",
-            "Engineers"
+            { name: "Orders", value: "/orders" },
+            { name: "Subscription", value: "/subscription" },
+            { name: "Shipping Center", value: "/shippingcenter" },
+            { name: "Cloud End Point", value: "/cloudendpoint" },
+            { name: "Engineers", value: "/engineers" }
           ].map((text, index) => (
             <Box
               key={index}
@@ -73,17 +76,19 @@ export const Nav = () => {
               px={2}
               py={2}
               borderBottom={
-                text === "Shipping Center" ? "3px solid #008dff" : "none"
+                text.value === pathname ? "3px solid #008dff" : "none"
               }
             >
-              <Typography
-                variant="body2"
-                fontFamily="'Poppins-Medium', Helvetica"
-                fontSize="14px"
-                color={text === "Shipping Center" ? "#008dff" : "textSecondary"}
+              <Link
+                href={text.value}
+                style={{
+                  color: `${text.value === pathname ? "#008dff" : "textSecondary"}`,
+                  fontFamily :"'Poppins-Medium', Helvetica",
+                  fontSize:"14px"
+                }}
               >
-                {text}
-              </Typography>
+                {text.name}
+              </Link>
             </Box>
           ))}
         </Box>

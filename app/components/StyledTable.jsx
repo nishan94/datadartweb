@@ -95,75 +95,51 @@ const StyledTable = ({ columns, data, onSelectionChange, onRowClick }) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer >
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell padding="checkbox" sx={{ bgcolor: "#f1f4f7" }}>
+            <TableCell  sx={{ bgcolor: "#f1f4f7",padding:"8px" }}>
               <Checkbox
-                checked={selectedRows.every(value => value)}
+                checked={selectedRows.every((value) => value)}
                 onChange={handleSelectAll}
               />
             </TableCell>
-            {columns.map(column => (
-              <TableCell
-                key={column.header}
-                sx={{ bgcolor: "#f1f4f7", cursor: "pointer" }}
-                onClick={() => handleSort(column.accessor)}
-              >
+            {columns.map((column) => (
+              <TableCell key={column.header} sx={{ bgcolor: "#f1f4f7", cursor: 'pointer',padding:"8px" }} onClick={() => handleSort(column.accessor)}>
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontFamily: "Poppins, sans-serif", color: "#4E5A6A" }}
-                  >
+                  <Typography variant="body2" sx={{ fontFamily: "Poppins, sans-serif", color: "#4E5A6A" }}>
                     {column.header}
                   </Typography>
-                  {/* Sort Indicator */}
                   {sortConfig.key === column.accessor ? (
-                    sortConfig.direction === "asc" ? (
-                      <ArrowUpwardIcon
-                        sx={{
-                          fontSize: "16px"
-                        }}
-                      />
-                    ) : (
-                      <ArrowDownwardIcon
-                        sx={{
-                          fontSize: "16px"
-                        }}
-                      />
-                    )
+                    sortConfig.direction === 'asc' ? <ArrowUpwardIcon sx={{
+                      fontSize: "16px"
+                    }} /> : <ArrowDownwardIcon sx={{
+                      fontSize: "16px"
+                    }} />
                   ) : null}
                 </Box>
               </TableCell>
             ))}
-            <TableCell sx={{ bgcolor: "#f1f4f7" }} />
+            <TableCell sx={{ bgcolor: "#f1f4f7" }} padding="none" />
           </TableRow>
         </TableHead>
         <TableBody>
           {sortedData.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
-              <TableCell padding="checkbox">
+            <TableRow key={rowIndex} sx={{height:44}}>
+              <TableCell sx={{padding:"8px"}}>
                 <Checkbox
                   checked={selectedRows[rowIndex]}
                   onChange={() => handleRowSelect(rowIndex)}
                 />
               </TableCell>
-              {columns.map(column => (
-                <TableCell
-                  sx={{ fontFamily: "Poppins, sans-serif", color: "#4E5A6A" }}
-                  key={column.accessor}
-                >
-                  {column.accessor === "status"
-                    ? renderStatusBadge(row[column.accessor])
-                    : row[column.accessor]}
+              {columns.map((column) => (
+                <TableCell sx={{ fontFamily: "Poppins, sans-serif", color: "#4E5A6A",padding:"8px" }} key={column.accessor}>
+                  {column.accessor === "status" ? renderStatusBadge(row[column.accessor]) : row[column.accessor]}
                 </TableCell>
               ))}
-              <TableCell>
-                <IconButton
-                  aria-label="more options"
-                  onClick={() => onRowClick?.(row)}
-                >
+              <TableCell sx={{padding:"8px"}}>
+                <IconButton aria-label="more options" onClick={() => onRowClick?.(row)} >
                   <MoreVertIcon />
                 </IconButton>
               </TableCell>
