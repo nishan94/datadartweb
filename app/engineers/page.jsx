@@ -24,7 +24,7 @@ export const Engineers = () => {
   const columns = [
     { header: "SI.NO", accessor: "id" },
     { header: "Name", accessor: "name" },
-    { header: "Mail Id", accessor: "mailID" },
+    { header: "Mail Id", accessor: "mail" },
     { header: "No. of Center Assigned ", accessor: "noOfCenterAssigned" },
     { header: "Contact Number", accessor: "contact" },
     { header: "Region", accessor: "region" },
@@ -34,7 +34,7 @@ export const Engineers = () => {
   const data = Array.from({ length: totalItems }, (_, index) => ({
     id: String(index + 1).padStart(2, "0"),
     name: "Regular text column",
-    mailId: "test@mail.com",
+    mail: "test@mail.com",
     noOfCenterAssigned: "6",
     contact: "+919999999999",
     region: "Display City",
@@ -45,7 +45,7 @@ export const Engineers = () => {
   const filteredData = data.filter(
     item =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.mailId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.mail.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.noOfCenterAssigned.toLowerCase().includes(searchQuery.toLowerCase())
   )
 

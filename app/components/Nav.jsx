@@ -57,9 +57,10 @@ export const Nav = () => {
         display="flex"
         width="1102px"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent= {pathname === "/"? "end":"space-between"}
       >
-        <Box display="flex" alignItems="center" bgcolor="white">
+
+        {pathname !== "/" ? <Box display="flex" alignItems="center" bgcolor="white">
           {[
             { name: "Orders", value: "/orders" },
             { name: "Subscription", value: "/subscription" },
@@ -84,15 +85,16 @@ export const Nav = () => {
                 href={text.value}
                 style={{
                   color: text.value === pathname ? "#008dff" : "textSecondary",
-                  fontFamily :"'Poppins-Medium', Helvetica",
-                  fontSize:"14px"
+                  fontFamily: "'Poppins-Medium', Helvetica",
+                  fontSize: "14px"
                 }}
               >
                 {text.name}
               </Link>
             </Box>
           ))}
-        </Box>
+        </Box> : null}
+
 
         <Box display="flex" alignItems="center" gap={2}>
           <Paper
