@@ -9,6 +9,7 @@ import { Box, IconButton, InputBase, Paper, Typography } from "@mui/material"
 import React from "react"
 import { usePathname } from 'next/navigation';
 import Link from "next/link"
+import Logo from "./Header/logo"
 
 export const Nav = () => {
   const pathname = usePathname();
@@ -25,34 +26,7 @@ export const Nav = () => {
       bgcolor="white"
       zIndex={1000}
     >
-      <Box display="flex" width="201px" alignItems="center">
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="start"
-          justifyContent="center"
-        >
-          {/* Optional logo or branding can go here */}
-        </Box>
-        <Box display="flex" alignItems="end" justifyContent="center" ml="-20px">
-          <Typography
-            variant="h6"
-            color="#1f76f8"
-            fontFamily="'Poppins-ExtraBold', Helvetica"
-            fontSize="21.9px"
-          >
-            <Image src={"/assets/frame-2018777514.svg"} alt="Frame" width="64" height="64" unoptimized /> 
-            <span>&nbsp;</span>
-            <Typography
-              component="span"
-              fontFamily="'Poppins-Regular', Helvetica"
-              fontSize="14.6px"
-            >
-              Administrator
-            </Typography>
-          </Typography>
-        </Box>
-      </Box>
+      <Logo />
 
       <Box
         display="flex"

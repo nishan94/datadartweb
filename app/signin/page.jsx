@@ -15,7 +15,7 @@ import {
   } from "@mui/material"; 
   import React, { useState } from "react"; 
   import frame2018777514 from "../../public/assets/frame-2018777514.svg"; 
-  import image from "../../public/assets/image.png"; 
+  // import image from "../../public/assets/image.png"; 
   import Image from 'next/image'
 
   const theme = createTheme({ 
@@ -84,12 +84,6 @@ import {
               md={6} 
               sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }} 
             > 
-              <Box sx={{ mb: 4 }}> 
-                <Image src={"/assets/frame-2018777514.svg"} alt="Frame" width="64" height="64" unoptimized /> 
-                <Typography variant="h2" color="primary"> 
-                  Administrator 
-                </Typography> 
-              </Box> 
               <Typography variant="h1" gutterBottom> 
                 Sign in 
               </Typography> 
@@ -152,66 +146,36 @@ import {
               }} 
             > 
               <Box 
-                sx={{ 
-                  width: "100%", 
-                  height: "100%", 
-                  backgroundImage: `url(${image})`, 
-                  backgroundSize: "cover", 
-                  backgroundPosition: "center", 
-                  borderRadius: "22px", 
-                  position: "relative" 
-                }} 
+                display="flex" 
+                flexDirection="column" 
+                alignItems="flex-start" 
+                justifyContent="center" 
               > 
-                <Typography 
-                  variant="h1" 
-                  sx={{ 
-                    position: "absolute", 
-                    top: "20%", 
-                    left: "10%", 
-                    color: "white", 
-                    fontSize: "2.5rem", 
-                    fontWeight: 400 
-                  }} 
-                > 
-                  Unified Solution <br /> 
-                  for Data Transport 
-                </Typography> 
                 <Box 
-                  sx={{ 
-                    position: "absolute", 
-                    bottom: "5%", 
-                    left: "50%", 
-                    transform: "translateX(-50%)", 
-                    display: "flex", 
-                    gap: "8px" 
-                  }} 
+                  display="flex" 
+                  flexDirection="column" 
+                  width="115px" 
+                  height="29px" 
+                  alignItems="flex-start" 
+                  paddingBottom="10.45px" 
                 > 
                   <Box 
+                    width="115px" 
+                    height="28.92px" 
+                    marginBottom="-10.37px" 
                     sx={{ 
-                      width: "8px", 
-                      height: "8px", 
-                      backgroundColor: "white", 
-                      borderRadius: "50%" 
-                    }} 
-                  /> 
-                  <Box 
-                    sx={{ 
-                      width: "8px", 
-                      height: "8px", 
-                      backgroundColor: "rgba(217, 217, 217, 0.3)", 
-                      borderRadius: "50%" 
-                    }} 
-                  /> 
-                  <Box 
-                    sx={{ 
-                      width: "8px", 
-                      height: "8px", 
-                      backgroundColor: "rgba(217, 217, 217, 0.3)", 
-                      borderRadius: "50%" 
+                      backgroundImage: "url(/assets/clip-path-group.png)", 
+                      backgroundSize: "100% 100%", 
                     }} 
                   /> 
                 </Box> 
-              </Box> 
+                <img 
+                  width="47px" 
+                  height="14.92px" 
+                  alt="Tsecond logo" 
+                  src={"/assets/frame-2018777514.svg"} 
+                /> 
+              </Box>
             </Grid> 
           </Grid> 
           <Typography 
