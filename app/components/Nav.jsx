@@ -1,7 +1,7 @@
 // components/Nav.tsx
 
 "use client"
-
+import Image from "next/image"
 import NotificationsIcon from "@mui/icons-material/Notifications"
 import SearchIcon from "@mui/icons-material/Search"
 import SettingsIcon from "@mui/icons-material/Settings"
@@ -41,6 +41,7 @@ export const Nav = () => {
             fontFamily="'Poppins-ExtraBold', Helvetica"
             fontSize="21.9px"
           >
+            <Image src={"/assets/frame-2018777514.svg"} alt="Frame" width="64" height="64" unoptimized /> 
             <span>&nbsp;</span>
             <Typography
               component="span"
