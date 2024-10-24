@@ -68,7 +68,7 @@ export const Nav = () => {
             { name: "Engineers", value: "/engineers" }
           ].map((text, index) => (
             <Box
-              key={index}
+              key={`${text.value}-${text.value === pathname}`}
               display="flex"
               flexDirection="column"
               alignItems="center"
@@ -80,9 +80,10 @@ export const Nav = () => {
               }
             >
               <Link
+                key={`link-${index}`}
                 href={text.value}
                 style={{
-                  color: `${text.value === pathname ? "#008dff" : "textSecondary"}`,
+                  color: text.value === pathname ? "#008dff" : "textSecondary",
                   fontFamily :"'Poppins-Medium', Helvetica",
                   fontSize:"14px"
                 }}
